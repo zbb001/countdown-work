@@ -1,4 +1,4 @@
-// 初始化：加载保存的设置
+// 当牛做马倒计时 - 初始化
 document.addEventListener('DOMContentLoaded', () => {
   loadSettings();
   updatePreview();
@@ -31,7 +31,7 @@ function loadSettings() {
 // 保存设置
 function saveSettings() {
   const settings = {
-    projectName: document.getElementById('projectName').value || '外包项目',
+    projectName: document.getElementById('projectName').value || '苦逼项目',
     endDate: document.getElementById('endDate').value,
     startTime: document.getElementById('startTime').value || '09:00',
     endTime: document.getElementById('endTime').value || '18:00'
@@ -71,9 +71,11 @@ function updatePreview() {
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
   
   if (diffDays < 0) {
-    document.getElementById('previewDays').textContent = '已结束';
+    document.getElementById('previewDays').textContent = '已经自由了！';
   } else if (diffDays === 0) {
-    document.getElementById('previewDays').textContent = '今天结束！';
+    document.getElementById('previewDays').textContent = '今天解放！';
+  } else if (diffDays > 100) {
+    document.getElementById('previewDays').textContent = `${diffDays} 天 😭`;
   } else {
     document.getElementById('previewDays').textContent = `${diffDays} 天`;
   }
