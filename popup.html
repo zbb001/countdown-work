@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>当牛做马倒计时设置</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      width: 320px;
+      padding: 20px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+    
+    h1 {
+      font-size: 18px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      font-size: 12px;
+      margin-bottom: 5px;
+      opacity: 0.9;
+    }
+    
+    input[type="date"],
+    input[type="time"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      background: rgba(255,255,255,0.9);
+      color: #333;
+    }
+    
+    input[type="date"]:focus,
+    input[type="time"]:focus,
+    input[type="text"]:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.3);
+    }
+    
+    .time-row {
+      display: flex;
+      gap: 10px;
+    }
+    
+    .time-row .form-group {
+      flex: 1;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #667eea;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 10px;
+    }
+    
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    
+    .status {
+      text-align: center;
+      font-size: 12px;
+      margin-top: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .status.show {
+      opacity: 1;
+    }
+    
+    .preview {
+      margin-top: 20px;
+      padding: 15px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 10px;
+      text-align: center;
+    }
+    
+    .preview-label {
+      font-size: 11px;
+      opacity: 0.7;
+      margin-bottom: 5px;
+    }
+    
+    .preview-value {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>⏰ 上班倒计时设置</h1>
+  
+  <div class="form-group">
+    <label>项目名称（可选）</label>
+    <input type="text" id="projectName" placeholder="例如：XX银行外包项目">
+  </div>
+  
+  <div class="form-group">
+    <label>项目结束日期</label>
+    <input type="date" id="endDate">
+  </div>
+  
+  <div class="time-row">
+    <div class="form-group">
+      <label>上班时间</label>
+      <input type="time" id="startTime" value="09:00">
+    </div>
+    <div class="form-group">
+      <label>下班时间</label>
+      <input type="time" id="endTime" value="18:00">
+    </div>
+  </div>
+  
+  <button id="saveBtn">保存设置</button>
+  <div class="status" id="status">设置已保存！</div>
+  
+  <div class="preview">
+    <div class="preview-label">距离项目结束还有</div>
+    <div class="preview-value" id="previewDays">-- 天</div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

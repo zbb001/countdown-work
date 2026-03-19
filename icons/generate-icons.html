@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>生成图标</title>
+</head>
+<body>
+  <canvas id="canvas16" width="16" height="16"></canvas>
+  <canvas id="canvas48" width="48" height="48"></canvas>
+  <canvas id="canvas128" width="128" height="128"></canvas>
+  
+  <script>
+    function drawIcon(size, canvasId) {
+      const canvas = document.getElementById(canvasId);
+      const ctx = canvas.getContext('2d');
+      
+      // 背景渐变
+      const gradient = ctx.createLinearGradient(0, 0, size, size);
+      gradient.addColorStop(0, '#667eea');
+      gradient.addColorStop(1, '#764ba2');
+      
+      // 绘制圆形背景
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, size/2, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // 绘制时钟图标
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth = size * 0.08;
+      ctx.lineCap = 'round';
+      
+      // 时钟外圈
+      ctx.beginPath();
+      ctx.arc(size/2, size/2, size * 0.35, 0, Math.PI * 2);
+      ctx.stroke();
+      
+      // 时钟指针
+      ctx.beginPath();
+      ctx.moveTo(size/2, size/2);
+      ctx.lineTo(size/2, size/2 - size * 0.2);
+      ctx.stroke();
+      
+      ctx.beginPath();
+      ctx.moveTo(size/2, size/2);
+      ctx.lineTo(size/2 + size * 0.15, size/2);
+      ctx.stroke();
+      
+      // 导出为图片
+      const link = document.createElement('a');
+      link.download = `icon${size}.png`;
+      link.href = canvas.toDataURL();
+      link.click();
+    }
+    
+    // 生成三个尺寸的图标
+    setTimeout(() => {
+      drawIcon(16, 'canvas16');
+      drawIcon(48, 'canvas48');
+      drawIcon(128, 'canvas128');
+    }, 100);
+  </script>
+</body>
+</html>
