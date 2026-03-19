@@ -92,9 +92,19 @@
       toggleCollapse();
     });
     
-    // 点击收起状态的小图标展开
-    countdownWidget.addEventListener('click', () => {
-      if (countdownWidget.classList.contains('collapsed')) {
+    // 点击收起状态的小图标展开（仅在没有拖拽时触发）
+    let dragStartTime = 0;
+    countdownWidget.addEventListener('mousedown', () => {
+      dragStartTime = Date.now();
+    });
+    
+    countdownWidget.addEventListener('click', (e) => {
+      // 如果点击的是toggle按钮，不处理
+      if (e.target.classList.contains('countdown-toggle')) return;
+      
+      // 判断是否为拖拽后的点击（超过200ms认为是拖拽）
+      const clickDuration = Date.now() - dragStartTime;
+      if (countdownWidget.classList.contains('collapsed') && clickDuration < 200) {
         toggleCollapse();
       }
     });

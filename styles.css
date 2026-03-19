@@ -26,10 +26,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  top: 100px !important;
-  right: 20px !important;
-  left: auto !important;
-  cursor: pointer;
+  cursor: move;
   background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
   border: 2px solid rgba(255, 255, 255, 0.3);
 }
@@ -48,6 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: move;
 }
 
 #work-countdown-widget.collapsed .countdown-icon {
