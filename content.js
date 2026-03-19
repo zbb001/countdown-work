@@ -1,9 +1,28 @@
-// 上班倒计时 - 内容脚本
+// 当牛做马倒计时 - 内容脚本
 (function() {
   'use strict';
   
   let countdownWidget = null;
   let updateInterval = null;
+  
+  // 嘲讽语录库
+  const sarcasticQuotes = [
+    '这班是非上不可吗？',
+    '又是当牛做马的一天',
+    '工资三千五，命比咖啡苦',
+    '打工而已，别太认真',
+    '老板画的饼，噎死我了',
+    '摸鱼是对工资的基本尊重',
+    '上班如上坟，下班如重生',
+    '我是自愿来打工的（不是）',
+    '今天的苦就吃到这里',
+    '我的时间很值钱，但老板不觉得',
+    '打工人的命也是命啊',
+    '再坚持一下，就下班了！',
+    '这个班不上也罢（开玩笑的）',
+    '每天都在为别人的梦想努力',
+    '工资到账的那一刻，一切都值得...吗？'
+  ];
   
   // 初始化
   function init() {
@@ -34,27 +53,32 @@
     
     countdownWidget = document.createElement('div');
     countdownWidget.id = 'work-countdown-widget';
+    const randomQuote = sarcasticQuotes[Math.floor(Math.random() * sarcasticQuotes.length)];
+    
     countdownWidget.innerHTML = `
       <div class="countdown-header">
-        <span class="countdown-icon">⏰</span>
-        <span class="countdown-title">上班倒计时</span>
+        <span class="countdown-icon">🐮</span>
+        <span class="countdown-title">当牛做马倒计时</span>
         <button class="countdown-toggle" title="收起/展开">−</button>
       </div>
       <div class="countdown-body">
         <div class="project-name" id="project-name">加载中...</div>
         <div class="countdown-section">
-          <div class="countdown-label">距离项目结束</div>
+          <div class="countdown-label">距离脱离苦海</div>
           <div class="countdown-value" id="project-days">--</div>
           <div class="countdown-unit">天</div>
         </div>
         <div class="divider"></div>
         <div class="countdown-section work-section">
-          <div class="countdown-label">距离下班</div>
+          <div class="countdown-label">距离解放还有</div>
           <div class="work-time" id="work-time">--:--:--</div>
           <div class="progress-bar">
             <div class="progress-fill" id="progress-fill"></div>
           </div>
           <div class="progress-text" id="progress-text">0%</div>
+        </div>
+        <div class="sarcasm-marquee">
+          <div class="marquee-content" id="sarcasm-marquee">${randomQuote}</div>
         </div>
       </div>
     `;
@@ -115,9 +139,17 @@
   function updateDisplay(settings) {
     if (!countdownWidget) return;
     
-    // 更新项目名称
+    // 更新项目名称（添加自嘲前缀）
     const projectNameEl = countdownWidget.querySelector('#project-name');
-    projectNameEl.textContent = settings.projectName;
+    const prefixes = ['💼 ', '📋 ', '🏢 ', '🐂 ', '🐴 '];
+    const prefix = prefixes[Math.floor(Math.random() * prefixes.length)];
+    projectNameEl.textContent = prefix + (settings.projectName || '苦逼项目');
+    
+    // 定期更新跑马灯语录（每10秒）
+    const marqueeEl = countdownWidget.querySelector('#sarcasm-marquee');
+    if (marqueeEl && Math.random() < 0.1) {
+      marqueeEl.textContent = sarcasticQuotes[Math.floor(Math.random() * sarcasticQuotes.length)];
+    }
     
     // 计算项目剩余天数
     const projectDaysEl = countdownWidget.querySelector('#project-days');
@@ -136,6 +168,9 @@
       } else if (diffDays === 0) {
         projectDaysEl.textContent = '今';
         projectDaysEl.style.color = '#ff6b6b';
+      } else if (diffDays > 100) {
+        projectDaysEl.textContent = diffDays;
+        projectDaysEl.style.color = '#ee5a6f'; // 深红色 - 太惨了
       } else {
         projectDaysEl.textContent = diffDays;
         // 根据剩余天数设置颜色
@@ -169,16 +204,16 @@
     // 判断当前状态
     if (now < startTime) {
       // 还没上班
-      workTimeEl.textContent = '未开始';
+      workTimeEl.textContent = '还没开始';
       workTimeEl.style.color = '#74b9ff';
       progressFillEl.style.width = '0%';
-      progressTextEl.textContent = '0%';
+      progressTextEl.textContent = '0% - 珍惜最后自由时光';
     } else if (now >= endTime) {
       // 已经下班
-      workTimeEl.textContent = '已下班';
+      workTimeEl.textContent = '终于解放';
       workTimeEl.style.color = '#1dd1a1';
       progressFillEl.style.width = '100%';
-      progressTextEl.textContent = '100%';
+      progressTextEl.textContent = '100% - 快跑！';
     } else {
       // 上班中
       const remainingMs = endTime - now;
@@ -196,7 +231,21 @@
       const progress = Math.min(100, Math.max(0, (elapsedMs / totalWorkMs) * 100));
       
       progressFillEl.style.width = `${progress}%`;
-      progressTextEl.textContent = `${Math.round(progress)}%`;
+      
+      // 根据进度显示不同的自嘲文案
+      let progressMsg = '';
+      if (progress < 20) {
+        progressMsg = ' - 煎熬刚开始';
+      } else if (progress < 40) {
+        progressMsg = ' - 才这点进度？';
+      } else if (progress < 60) {
+        progressMsg = ' - 过半了！撑住！';
+      } else if (progress < 80) {
+        progressMsg = ' - 胜利在望';
+      } else {
+        progressMsg = ' - 最后冲刺！';
+      }
+      progressTextEl.textContent = `${Math.round(progress)}%${progressMsg}`;
       
       // 根据进度设置颜色
       if (progress < 30) {

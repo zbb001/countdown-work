@@ -1,34 +1,37 @@
-/* 上班倒计时 - 样式 */
+/* 当牛做马倒计时 - 样式 */
 
 #work-countdown-widget {
   position: fixed;
   top: 100px;
   right: 20px;
-  width: 200px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  width: 220px;
+  background: linear-gradient(135deg, #2d3436 0%, #000000 50%, #2d3436 100%);
   border-radius: 16px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
   color: white;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   z-index: 999999;
   overflow: hidden;
   transition: all 0.3s ease;
   user-select: none;
+  border: 1px solid rgba(255, 107, 107, 0.3);
 }
 
 #work-countdown-widget:hover {
-  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6), 0 0 20px rgba(255, 107, 107, 0.2);
   transform: translateY(-2px);
 }
 
 #work-countdown-widget.collapsed {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   top: 100px !important;
   right: 20px !important;
   left: auto !important;
   cursor: pointer;
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  border: 2px solid rgba(255, 255, 255, 0.3);
 }
 
 #work-countdown-widget.collapsed .countdown-body,
@@ -49,7 +52,13 @@
 
 #work-countdown-widget.collapsed .countdown-icon {
   margin: 0;
-  font-size: 22px;
+  font-size: 26px;
+  animation: shake 2s infinite;
+}
+
+@keyframes shake {
+  0%, 100% { transform: rotate(-5deg); }
+  50% { transform: rotate(5deg); }
 }
 
 #work-countdown-widget.collapsed:hover {
@@ -61,8 +70,9 @@
   display: flex;
   align-items: center;
   padding: 12px 15px;
-  background: rgba(0, 0, 0, 0.1);
+  background: linear-gradient(90deg, rgba(255, 107, 107, 0.2), rgba(238, 90, 111, 0.1));
   cursor: move;
+  border-bottom: 1px solid rgba(255, 107, 107, 0.2);
 }
 
 .countdown-icon {
@@ -72,9 +82,13 @@
 
 .countdown-title {
   flex: 1;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.5px;
+  background: linear-gradient(90deg, #ff6b6b, #feca57);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .countdown-toggle {
@@ -102,14 +116,16 @@
 }
 
 .project-name {
-  font-size: 12px;
-  opacity: 0.9;
+  font-size: 13px;
+  opacity: 0.95;
   margin-bottom: 12px;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 500;
+  font-weight: 600;
+  color: #ff9f43;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
 /* 倒计时区块 */
@@ -123,11 +139,12 @@
 }
 
 .countdown-label {
-  font-size: 11px;
-  opacity: 0.8;
+  font-size: 10px;
+  opacity: 0.7;
   margin-bottom: 5px;
   text-transform: uppercase;
   letter-spacing: 1px;
+  color: #dfe6e9;
 }
 
 .countdown-value {
@@ -156,12 +173,13 @@
 }
 
 .work-time {
-  font-size: 24px;
-  font-weight: 600;
+  font-size: 26px;
+  font-weight: 700;
   font-family: 'SF Mono', Monaco, monospace;
   letter-spacing: 1px;
   margin: 8px 0;
   transition: color 0.3s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 /* 进度条 */
@@ -182,9 +200,40 @@
 }
 
 .progress-text {
-  font-size: 10px;
-  opacity: 0.7;
+  font-size: 9px;
+  opacity: 0.8;
   text-align: right;
+  font-style: italic;
+  color: #b2bec3;
+}
+
+/* 跑马灯嘲讽语录 */
+.sarcasm-marquee {
+  margin-top: 12px;
+  padding: 8px 0;
+  background: rgba(255, 107, 107, 0.1);
+  border-radius: 8px;
+  border-left: 3px solid #ff6b6b;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.marquee-content {
+  display: inline-block;
+  font-size: 11px;
+  color: #ff9f43;
+  font-style: italic;
+  padding-left: 100%;
+  animation: marquee 8s linear infinite;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-100%); }
+}
+
+.sarcasm-marquee:hover .marquee-content {
+  animation-play-state: paused;
 }
 
 /* 动画效果 */
@@ -217,7 +266,7 @@
   #work-countdown-widget {
     top: 80px;
     right: 10px;
-    width: 160px;
+    width: 180px;
   }
   
   .countdown-value {
@@ -225,6 +274,13 @@
   }
   
   .work-time {
-    font-size: 20px;
+    font-size: 22px;
+  }
+  
+  .sarcasm-marquee {
+    padding: 6px 0;
+  }
+  .marquee-content {
+    font-size: 10px;
   }
 }
